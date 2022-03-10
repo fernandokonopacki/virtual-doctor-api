@@ -1,5 +1,12 @@
 {
     "api" : {
         "porta": 3000
+    },
+
+    "mysql" : {
+        "database" : "virtualdoctor",
+        "usuario" : "root",
+        "senha" : "123456",
+        "host" : "127.0.0.1"
     }
 }
