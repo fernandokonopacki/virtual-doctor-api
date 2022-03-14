@@ -1,23 +1,38 @@
 const TabelaPacientes = require('../databases/TabelaPacientes');
 const PacienteModel = require('../models/PacienteModel');
-const Model = require('../models/PacienteModel')
+const Model = require('../models/PacienteModel');
+const { SerializePacientes } = require('../Serializer');
+const Serializer = require('../Serializer').SerializePacientes;
 const PacienteService = require('../services/PacienteService')
-
 
 module.exports = roteador => {
 
     roteador.get('/pacientes', async (req, res) => {
         const result = await Model.listar();
         res.status(200);
-        res.send(result);
+        const serializer = new Serializer(
+            res.getHeader('Content-Type')
+        );
+        res.send(
+            serializer.serializar(result)
+        );
     })
 
     roteador.post('/pacientes', async (req, res, next) =>{
-        const input = req.body;
-        const pacienteService = new PacienteService(input);
-        await pacienteService.create(input);
-        res.status(201);
-        res.send(pacienteService);
-    });
+        try{
+            const input = req.body;
+            const paciente = new PacienteService(input);
+            await paciente.create(input);
+            res.status(201);
+            const serilizador = new SerializePacientes(
+                res.getHeader('Content-Type')
+            )
+            res.send(
+                serilizador.serializar(paciente)
+            );
+        } catch(error){
+            next(error);
+        }
+    })
 
 };
