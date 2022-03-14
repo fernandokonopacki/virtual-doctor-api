@@ -30,7 +30,7 @@ const columns = {
         type: Sequelize.INTEGER,
         allowNull: false
     },
-    descrição: {
+    descricao: {
         type: Sequelize.STRING,
         allowNull: true
     }

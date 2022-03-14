@@ -1,5 +1,5 @@
 const models = [
-    require('../TabelaPacientes')
+    require('./TabelaPacientes')
 ]
 
 async function createTables(){

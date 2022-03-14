@@ -2,7 +2,6 @@
     "api" : {
         "porta": 3000
     },
-
     "mysql" : {
         "database" : "virtualdoctor",
         "usuario" : "root",
