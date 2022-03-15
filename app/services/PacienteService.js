@@ -37,6 +37,26 @@ class PacienteService{
         this.dataAtualizacao = result.dataAtualizacao;
         this.versao = result.versao;
     }
+
+    async atualizar(){
+        await PacienteModel.pegarPorId(this.id)
+        const campos = ['nome', 'email', 'dataNascimento', 'endereco', 'bairro', 'estado', 'numero', 'descricao']
+        const dadosParaAtualizar = {}
+
+        campos.forEach((campo) => {
+            const valor = this[campo]
+
+            if(typeof valor === 'string' && valor.length > 0){
+                dadosParaAtualizar[campo] = valor
+            }
+        })
+
+        if(Object.keys(dadosParaAtualizar).length === 0){
+            throw new DadosNaoFornecidos()
+        }
+
+        await PacienteModel.atualizar(this.id, dadosParaAtualizar)
+    }
 }
 
 module.exports = PacienteService;

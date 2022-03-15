@@ -3,6 +3,7 @@ const consign = require('consign');
 const bodyParser = require('body-parser');
 const ValorNaoSuportado = require('../app/errors/ValorNaoSuportadoError');
 const { SerializeError } = require('../app/Serializer');
+const NaoEncontrado = require('../app/errors/NaoEncontrado');
 
 module.exports = () => {
     var app = express();
@@ -27,6 +28,10 @@ module.exports = () => {
 
     app.use((error, req, res, next) => {
         let status = 500
+
+        if(error instanceof NaoEncontrado){
+            status = 404
+        }
 
         if(error instanceof ValorNaoSuportado){
             status = 406

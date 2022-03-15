@@ -16,7 +16,7 @@ module.exports = roteador => {
         res.send(
             serializer.serializar(result)
         );
-    })
+    });
 
     roteador.post('/pacientes', async (req, res, next) =>{
         try{
@@ -33,6 +33,14 @@ module.exports = roteador => {
         } catch(error){
             next(error);
         }
+    });
+
+    roteador.put('/pacientes/:id', async (req, res, next) => {
+        const id = req.params.id;
+        const input = req.body;
+        const data = Object.assign({}, input, {id: id});
+        const paciente = new PacienteService(data)
+        await paciente.atualizar();
     })
 
 };

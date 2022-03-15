@@ -7,5 +7,19 @@ module.exports = {
 
     inserir(pacientes){
         return Modelo.create(pacientes);
+    },
+
+    async pegarPorId(id){
+        const encontrado = await Modelo.findOne({
+            where: {
+                id: id
+            }
+        })
+
+        if(!encontrado){
+            throw new NaoEncontrado('Fornecedor');
+        }
+
+        return encontrado
     }
 }
